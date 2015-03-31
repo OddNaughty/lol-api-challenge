@@ -4,8 +4,8 @@
 </head>
 <body ng-controller="IndexCtrl as vm">
     <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
-    <input type="text" ng-model="summonerName"/>
-    <button type="submit" ng-click="getSummonerId(summonerName)"></button>
+    <input type="text" ng-model="vm.summonerName"/>
+    <button type="submit" ng-click="getSummonerId(vm.summonerName)"></button>
     <h2>Id:</h2>
     <p>{{vm.summonerId}}</p>
 </body>
@@ -15,12 +15,17 @@
     app.controller('IndexCtrl', function ($scope, $http) {
         var vm = this;
         vm.servers = ["na", "euw"];
-        vm.summonerServer = undefined;
+        vm.summonerServer = "euw";
+        vm.summonerName = "OdNaughty";
         $scope.getSummonerId = function (name) {
             $http.get('https://euw.api.pvp.net/api/lol/' + vm.summonerServer + '/v1.4/summoner/by-name/' + name + '?api_key=d053708b-6f3b-4a2f-a17d-7fe500178be6')
             .success(function (data) {
                 console.log(data);
-                vm.summonerId = data.name ;
+                var realDatas = data[Object.keys(data)[0]];
+                vm.summonerId = realDatas.id;
+            })
+            .error(function(data) {
+                console.log("ERROR", data);
             });
         };
     });
