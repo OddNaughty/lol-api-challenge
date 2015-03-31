@@ -1,0 +1,23 @@
+<fa-app>
+    <fa-header-footer-layout>
+        <fa-modifier fa-size="[undefined, 100]">
+            <fa-surface fa-background-color="'#31d845'">
+                <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
+                <input type="text" ng-model="vm.summonerName"/>
+                <button type="submit" ng-click="vm.getSummonerId()"></button>
+            </fa-surface>
+        </fa-modifier>
+        <fa-grid-layout fa-options="vm.gridOptions">
+            <fa-modifier ng-repeat="item in vm.scores track by $index">
+                <fa-surface fa-background-color="item ? '#27ff00' : '#ff1010'">
+                    <p>game {{$index}}</p>
+                </fa-surface>
+            </fa-modifier>
+        </fa-grid-layout>
+        <fa-modifier fa-size="[undefined, 100]">
+            <fa-surface fa-background-color="'#6c71c4'">
+                <p>Footer</p>
+            </fa-surface>
+        </fa-modifier>
+    </fa-header-footer-layout>
+</fa-app>
