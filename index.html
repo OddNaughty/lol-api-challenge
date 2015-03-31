@@ -1,33 +1,100 @@
 <html ng-app="LOLApi">
 <head>
-    <script type="application/javascript" src="assets/angular/angular.js"></script>
+    <link rel="stylesheet" href="assets/famous-angular/famous-angular.css">
 </head>
+<!--
 <body ng-controller="IndexCtrl as vm">
     <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
     <input type="text" ng-model="vm.summonerName"/>
     <button type="submit" ng-click="getSummonerId(vm.summonerName)"></button>
     <h2>Id:</h2>
     <p>{{vm.summonerId}}</p>
+-->
+<body>
+    <fa-app ng-controller="FamousCtrl as vm">
+        <fa-header-footer-layout>
+            <fa-modifier fa-size="[undefined, 100]">
+                <fa-surface fa-background-color="'#31d845'">
+                    <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
+                    <input type="text" ng-model="vm.summonerName"/>
+                    <button type="submit" ng-click="getSummonerId(vm.summonerName)"></button>
+                </fa-surface>
+            </fa-modifier>
+            <fa-grid-layout fa-options="vm.gridOptions">
+                <fa-modifier ng-repeat="item in vm.scores track by $index">
+                    <fa-surface fa-background-color="item ? '#27ff00' : '#ff1010'">
+                        <p>game {{$index}}</p>
+                    </fa-surface>
+                </fa-modifier>
+            </fa-grid-layout>
+            <fa-modifier fa-size="[undefined, 100]">
+                <fa-surface fa-background-color="'#6c71c4'">
+                    <p>Footer</p>
+                </fa-surface>
+            </fa-modifier>
+        </fa-header-footer-layout>
+<!--
+          <fa-modifier fa-size="vm.famousShit.size"
+            fa-translate="vm.famousShit.translateValues">
+              <fa-surface fa-background-color="'#FA5C4F'" fa-color="'#fff'">
+                <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
+                <input type="text" ng-model="vm.summonerName"/>
+                <button type="submit" ng-click="getSummonerId(vm.summonerName)"></button>
+                <h2>Id:</h2>
+                <p>{{vm.summonerId}}</p>
+            </fa-surface>
+        </fa-modifier>
+-->
+    </fa-app>
 </body>
-
+<script type="application/javascript" src="assets/angular/angular.js"></script>
+<script type="application/javascript" src="assets/famous/famous-global.js"></script>
+<script type="application/javascript" src="assets/famous-angular/famous-angular.js"></script>
 <script type="application/javascript">
-    var app = angular.module('LOLApi', []);
-    app.controller('IndexCtrl', function ($scope, $http) {
+    var app = angular.module('LOLApi', ['famous.angular']);
+    app.controller('FamousCtrl', function ($scope, $http) {
         var vm = this;
         vm.servers = ["na", "euw"];
         vm.summonerServer = "euw";
         vm.summonerName = "OdNaughty";
+        vm.famousShit = {
+            size: [1000, 1000],
+            translateValues: [100, 100, 0]
+        };
+        vm.gridOptions = {
+            dimensions: [1, 1]
+        };
+        
+        vm.scores = [];
+
         $scope.getSummonerId = function (name) {
-            $http.get('https://euw.api.pvp.net/api/lol/' + vm.summonerServer + '/v1.4/summoner/by-name/' + name + '?api_key=d053708b-6f3b-4a2f-a17d-7fe500178be6')
+            $http.get('https://' + vm.summonerServer + '.api.pvp.net/api/lol/' + vm.summonerServer + '/v1.4/summoner/by-name/' + name + '?api_key=d053708b-6f3b-4a2f-a17d-7fe500178be6')
             .success(function (data) {
-                console.log(data);
                 var realDatas = data[Object.keys(data)[0]];
-                vm.summonerId = realDatas.id;
+                var summonerId = realDatas.id;
+                vm.getMatchesById(summonerId);
             })
             .error(function(data) {
                 console.log("ERROR", data);
             });
         };
+        
+        vm.getMatchesById = function(id) {
+            console.log(id);
+            https://euw.api.pvp.net/api/lol/euw/v2.2/matchhistory/41657753?rankedQueues=RANKED_SOLO_5x5&api_key=d053708b-6f3b-4a2f-a17d-7fe500178be6
+            $http.get('https://' + vm.summonerServer + '.api.pvp.net/api/lol/' + vm.summonerServer + '/v2.2/matchhistory/' + id + '?api_key=d053708b-6f3b-4a2f-a17d-7fe500178be6')
+            .success(function (data) {
+                vm.gridOptions.dimensions[1] = data.matches.length;
+                vm.scores = [];
+                angular.forEach(data.matches, function (value, index) {
+                    console.log(index, value.participants[0].stats.winner);
+                    vm.scores.push(value.participants[0].stats.winner);
+                });
+            })
+        }
     });
+//    app.controller('FamousCtrl', function ($scope) {
+//        
+//    });
 </script>
 </html>
