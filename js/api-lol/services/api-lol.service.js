@@ -25,7 +25,7 @@
         function getMatchesById(server, id) {
             var url = 'https://' + server + '.api.pvp.net/api/lol/' + server + '/v2.2/matchhistory/' + id + '?api_key=' + apiKey;
             return $http.get(url);
-        }        
+        }
     }
     
 }());

@@ -15,6 +15,13 @@
                 templateUrl: 'templates/index.html',
                 controller: 'IndexCtrl',
                 controllerAs: 'vm'
+            })
+            .state('test', {
+                url: 'test',
+                templateUrl: 'templates/test.html',
+                controller: function ($scope) {
+                    $scope.test = "test";
+                }
             });
     }
 }());

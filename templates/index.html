@@ -1,16 +1,21 @@
 <fa-app>
     <fa-header-footer-layout>
         <fa-modifier fa-size="[undefined, 100]">
-            <fa-surface fa-background-color="'#31d845'">
+            <fa-surface fa-background-color="'#31d845'" fa-click="vm.changeDimensions($event)">
                 <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
                 <input type="text" ng-model="vm.summonerName"/>
                 <button type="submit" ng-click="vm.getSummonerId()"></button>
             </fa-surface>
+  		    <fa-modifier fa-align="[1, 0]" fa-origin="[1, 0]" fa-size="[200, undefined]">
+  			   <fa-surface ng-class="{test: true}" fa-background-color="'black'" >
+                   <p ui-sref="test">State 1</p>
+                </fa-surface>
+            </fa-modifier>
         </fa-modifier>
         <fa-grid-layout fa-options="vm.gridOptions">
             <fa-modifier ng-repeat="item in vm.scores track by $index">
-                <fa-surface fa-background-color="item ? '#27ff00' : '#ff1010'">
-                    <p>game {{$index}}</p>
+                <fa-surface fa-background-color="(item.win == 'win') ? '#27ff00' : '#ff1010'">
+                    <p>game {{index}} {{item.win}}</p>
                 </fa-surface>
             </fa-modifier>
         </fa-grid-layout>

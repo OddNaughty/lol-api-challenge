@@ -1,3 +1,9 @@
+.test {
+    text-align: center;
+    line-height: 100px;
+    color: darkturquoise;
+}
+
 body {
     font-family: 'Electrolize', sans-serif;
 }
