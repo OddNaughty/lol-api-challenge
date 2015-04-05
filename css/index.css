@@ -1,7 +1,9 @@
 .test {
     text-align: center;
-    line-height: 100px;
+    line-height: 150px;
     color: darkturquoise;
+    background-color: black;
+    cursor: pointer;
 }
 
 body {

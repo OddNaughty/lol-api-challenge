@@ -5,13 +5,13 @@
         .module('apiChallenge.layouts.controllers')
         .controller('IndexCtrl', IndexCtrl);
     
-    IndexCtrl.$inject = ['$http', 'LolAPI'];
+    IndexCtrl.$inject = ['$http', '$famous', 'LolAPI'];
     
-    function IndexCtrl($http, LolAPI) {
+    function IndexCtrl($http, $famous, LolAPI) {
         var vm = this;
         vm.servers = ["na", "euw"];
-        vm.summonerServer = "na";
-        vm.summonerName = "froggen";
+        vm.summonerServer = "euw";
+        vm.summonerName = "OdNaughty";
         vm.gridOptions = {
             dimensions: [],
             transition: {
@@ -20,15 +20,16 @@
             }
         };
         vm.scores = [];
+        
 
         vm.getSummonerId = function () {
             LolAPI.getSummonerByName(vm.summonerServer, vm.summonerName)
                 .success(function (data) {
-                    var realDatas = data[Object.keys(data)[0]];
-                    var summonerId = realDatas.id;
+                    var realDatas = data[Object.keys(data)[0]],
+                        summonerId = realDatas.id;
                     vm.getMatchesById(summonerId);
                 })
-                .error(function(data) {
+                .error(function (data) {
                     console.log("ERROR", data);
                 });
         };
@@ -41,12 +42,21 @@
                     angular.forEach(data.matches, function (value, index) {
                         vm.scores.push({win: value.participants[0].stats.winner ? "win" : "lost"});
                     });
-                });
+                })
+                .finally;
+            console.log(LolAPI.getMatchesById(vm.summonerServer, id).success());
         };
         
         vm.changeDimensions = function () {
-            console.log('clicked: ');
-            vm.gridOptions.dimensions = [vm.gridOptions.dimensions[1], vm.gridOptions.dimensions[0]]; 
+            vm.gridOptions.dimensions = [vm.gridOptions.dimensions[1], vm.gridOptions.dimensions[0]];
         };
+        
+        vm.testCallback = function () {
+            return LolAPI.getSummonerByName(vm.summonerServer, vm.summonerName).then(function (data) {
+                var realDatas = data[Object.keys(data)[0]],
+                    summonerId = realDatas.id;
+                return summonerId;
+            });
+        }
     }
 }());

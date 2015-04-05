@@ -1,14 +1,24 @@
 <fa-app>
-    <fa-header-footer-layout>
-        <fa-modifier fa-size="[undefined, 100]">
+    <fa-header-footer-layout fa-options="{headerSize: 150, footerSize: 75}">
+        <fa-modifier>
             <fa-surface fa-background-color="'#31d845'" fa-click="vm.changeDimensions($event)">
                 <select ng-options="i for i in vm.servers" ng-model="vm.summonerServer"></select>
                 <input type="text" ng-model="vm.summonerName"/>
-                <button type="submit" ng-click="vm.getSummonerId()"></button>
+<!--                <button type="submit" ng-click="vm.getSummonerId()"></button>-->
             </fa-surface>
-  		    <fa-modifier fa-align="[1, 0]" fa-origin="[1, 0]" fa-size="[200, undefined]">
-  			   <fa-surface ng-class="{test: true}" fa-background-color="'black'" >
-                   <p ui-sref="test">State 1</p>
+            <fa-modifier fa-size="[true, true]" fa-orgin="[0.5, 0.5]" fa-align="[0.2, 0]">
+                <famous-ajax-button call-function="vm.testCallback()">Chercher</famous-ajax-button>
+            </fa-modifier>
+            
+<!--
+            <fa-modifier fa-align="[0.4, 0]" fa-size="[true, true]" fa-translate="vm.myTransition.get()">
+                    <fa-surface class="famous-ajax-button" fa-click="vm.envoiDuPate()">Chercher</fa-surface>
+            </fa-modifier>
+-->
+            
+            <fa-modifier fa-align="[1, 0]" fa-origin="[1, 0]" fa-size="[200, undefined]">
+  			   <fa-surface class="test">
+                   <p ui-sref="test">Page de test :).</p>
                 </fa-surface>
             </fa-modifier>
         </fa-modifier>
@@ -19,10 +29,8 @@
                 </fa-surface>
             </fa-modifier>
         </fa-grid-layout>
-        <fa-modifier fa-size="[undefined, 100]">
-            <fa-surface fa-background-color="'#6c71c4'">
-                <p>Footer</p>
-            </fa-surface>
-        </fa-modifier>
+        <fa-surface fa-background-color="'#6c71c4'">
+            <p>Footer</p>
+        </fa-surface>
     </fa-header-footer-layout>
 </fa-app>

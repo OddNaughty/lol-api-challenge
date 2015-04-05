@@ -19,7 +19,10 @@
         
         function getSummonerByName(server, name) {
             var url = 'https://' + server + '.api.pvp.net/api/lol/' + server + '/v1.4/summoner/by-name/' + name + '?api_key=' + apiKey;
-            return $http.get(url);
+            var promise = $http.get(url).then(function(response) {
+                return response.data;
+            });
+            return promise;
         }
         
         function getMatchesById(server, id) {

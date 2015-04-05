@@ -1,0 +1,11 @@
+<fa-modifier fa-size="[size.width, size.height]" fa-opacity="myTransition">
+    <fa-surface class="famous-ajax-button" fa-background-color="'grey'"></fa-surface>
+</fa-modifier>
+<fa-modifier fa-size="[size.width, size.height]" fa-opacity="1 - myTransition.get()">
+    <fa-surface class="famous-ajax-button" fa-background-color="'red'"></fa-surface>
+</fa-modifier>
+<fa-modifier fa-size="[size.width / 2, size.height]" fa-translate="[myTransition.get() * (size.width - size.height), 0, 0]">
+    <fa-surface class="famous-ajax-button-switch"  fa-click="envoiDuPate()">
+        {{pending}}
+    </fa-surface>
+</fa-modifier>

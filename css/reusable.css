@@ -1,0 +1,14 @@
+.famous-ajax-button {
+    border: 1px solid gray;
+    border-radius: 25px;
+}
+
+.famous-ajax-button-switch {
+    text-align: center;
+    line-height: 50px;
+    background-color: #EEE;
+    border: 1px solid gray;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 1;
+}

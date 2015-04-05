@@ -13,7 +13,8 @@
             'apiChallenge.config',
             'apiChallenge.routes',
             'apiChallenge.api-lol',
-            'apiChallenge.layouts'
+            'apiChallenge.layouts',
+            'reusable-module'
         ]);
     
     //Par ex: Module qui va gérer la config d'angular pour le module "apiChallenge"
@@ -26,4 +27,9 @@
         .module('apiChallenge.api-lol', []);
     angular
         .module('apiChallenge.layouts', []);
+    angular
+        .module('reusable-module', []);
+    angular
+        .module('apiChallenge')
+        .constant("reusableUrl", "js/reusable/");
 }());
